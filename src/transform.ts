@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { removeLastSlash } from './utils'
 
 export type OperationCollection = {
   verb: string;
@@ -14,7 +15,7 @@ export function transformToHandlerCode(
 ): string {
   return operationCollection
     .map(op => {
-      return `rest.${op.verb}(\`\${baseURL}${op.path}\`, (req, res, ctx) => {
+      return `rest.${op.verb}(\`\${baseURL}${removeLastSlash(op.path)}\`, (req, res, ctx) => {
         const resultArray = [${op.responseMap.map(response => {
           return `[ctx.status(${parseInt(
             response?.code!
