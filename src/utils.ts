@@ -20,10 +20,15 @@ const EXTENSION_TO_PARSER: Record<string, string> = {
   json: 'json',
 };
 
-export async function prettify(
-  filePath: string | null,
-  content: string
-): Promise<string> {
+export function removeLastSlash(path: string) {
+  if (path[path.length - 1] === '/') {
+    return path.slice(0, path.length - 1);
+  }
+
+  return path
+}
+
+export async function prettify(filePath: string | null, content: string): Promise<string> {
   let config = null;
   let parser = 'typescript';
 
