@@ -12,6 +12,7 @@ export const browserMockTemplate = (
 /* tslint:disable */
 import { setupWorker, rest } from 'msw';
 import faker from '@faker-js/faker';
+import { customHandlers } from './custom';
 
 faker.seed(1);
 
@@ -34,7 +35,8 @@ export const handlers = [
 
 // This configures a Service Worker with the given request handlers.
 export const startWorker = () => {
-  const worker = setupWorker(...handlers);
+  const mock = [...customHandlers, ...handlers]
+  const worker = setupWorker(...mock);
   worker.start();
 }
 `;
